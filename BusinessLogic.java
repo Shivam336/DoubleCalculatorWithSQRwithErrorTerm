@@ -34,6 +34,10 @@ public class BusinessLogic {
 	private CalculatorValue operand1et = new CalculatorValue(0);
 	private CalculatorValue operand2et = new CalculatorValue(0);
 	private CalculatorValue resultet = new CalculatorValue(0);
+	private CalculatorValue fraction1 = new CalculatorValue(0);
+	private CalculatorValue fraction2 = new CalculatorValue(0);
+	private CalculatorValue addfraction = new CalculatorValue(0);
+	private CalculatorValue mpyfraction = new CalculatorValue(0);
 	private String operand1ErrorMessage = "";
 	private boolean operand1Defined = false;
 	private boolean operand1etDefined = false;
@@ -83,7 +87,6 @@ public class BusinessLogic {
 		operand1Defined = true;							// Otherwise, set the defined flag and
 		return true;										// signal that the set worked
 	}
-
 	public boolean setOperand1et(String value) {
 		operand1etDefined = false;							// Assume the operand will not be defined
 		if (value.length() <= 0) {						// See if the input is empty. If so no error
@@ -358,8 +361,24 @@ public class BusinessLogic {
 	
 	public String subtractionet() {
 		resultet = new CalculatorValue(operand1et);		
-		resultet.sub(operand2et);
+		resultet.add(operand2et);
+		return resultet.toString();
+
+	}
+//A new method for the multiplication of error terms of both the operands
+	public String productet() {
+		fraction1 = new CalculatorValue(operand1et);
+		fraction1.div(operand1);
+		fraction2 = new CalculatorValue(operand2et);
+		fraction2.div(operand2);
+		addfraction = new CalculatorValue(fraction1);
+		addfraction.add(fraction2);
+		mpyfraction = new CalculatorValue(operand1);
+		mpyfraction.mpy(operand2);
+		resultet = new CalculatorValue(addfraction);		
+		resultet.mpy(mpyfraction);
 		return resultet.toString();
 
 	}
 }
+
