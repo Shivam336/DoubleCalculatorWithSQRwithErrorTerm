@@ -196,15 +196,15 @@ public class UserInterface {
 		
 		// Establish the MPY "x" button, position it, and link it to methods to accomplish its work
 		setupButtonUI(button_Mpy, "Symbol", 32, BUTTON_WIDTH, Pos.BASELINE_LEFT, 3 * buttonSpace-BUTTON_OFFSET, 300);
-		button_Mpy.setOnAction((event) -> { mpyOperands(); });
+		button_Mpy.setOnAction((event) -> { mpyOperands();mpyOperandset(); });
 		
 		// Establish the DIV "/" button, position it, and link it to methods to accomplish its work
 		setupButtonUI(button_Div, "Symbol", 32, BUTTON_WIDTH, Pos.BASELINE_LEFT, 4 * buttonSpace-BUTTON_OFFSET, 300);
-		button_Div.setOnAction((event) -> { divOperands(); });
+		button_Div.setOnAction((event) -> { divOperands();divOperandset(); });
 		
 		// Establish the sqrt button, position it, and link it to methods to accomplish its work
 		setupButtonUI(button_sqrt, "Symbol", 32, BUTTON_WIDTH, Pos.BASELINE_LEFT, 5 * buttonSpace-BUTTON_OFFSET, 300);
-		button_sqrt.setOnAction((event) -> { sqrtOperands(); });
+		button_sqrt.setOnAction((event) -> { sqrtOperands(); sqrtOperandset();});
 		
 		// Error Message for the Measured Value for operand 1
 		errO1MVPart1.setFill(Color.BLACK);
@@ -577,6 +577,25 @@ public class UserInterface {
 		}
 	}
 
+	// This is the multiply routine for error term
+	
+	private void mpyOperandset(){
+
+		
+		// If the operands are defined and valid, request the business logic method to do the Multiplication and return the
+		// result as a String. If there is a problem with the actual computation, an empty string is returned
+		String theAnswer = perform.productet();						// Call the business logic mpy method
+		label_errResult.setText("");									// Reset any result error messages from before
+		if (theAnswer.length() > 0) {								// Check the returned String to see if it is okay
+			text_Resultet.setText(theAnswer);							// If okay, display it in the result field and
+			label_Result.setText("Product");								// change the title of the field to "Multiplication"
+		}
+		else {														// Some error occurred while doing the Multiplication.
+			text_Resultet.setText("");									// Do not display a result if there is an error.				
+			label_Result.setText("Result");							// Reset the result label if there is an error.
+			label_errResult.setText(perform.getResultErrorMessage());	// Display the error message.
+		}
+	}
 
 
 	/**********
@@ -610,6 +629,26 @@ public class UserInterface {
 		}
 
 }
+	
+	// This is the division routine for error term
+	
+	private void divOperandset(){
+
+		
+		// If the operands are defined and valid, request the business logic method to do the Multiplication and return the
+		// result as a String. If there is a problem with the actual computation, an empty string is returned
+		String theAnswer = perform.quotientet();						// Call the business logic mpy method
+		label_errResult.setText("");									// Reset any result error messages from before
+		if (theAnswer.length() > 0) {								// Check the returned String to see if it is okay
+			text_Resultet.setText(theAnswer);							// If okay, display it in the result field and
+			label_Result.setText("Quotient");								// change the title of the field to "Multiplication"
+		}
+		else {														// Some error occurred while doing the Multiplication.
+			text_Resultet.setText("");									// Do not display a result if there is an error.				
+			label_Result.setText("Result");							// Reset the result label if there is an error.
+			label_errResult.setText(perform.getResultErrorMessage());	// Display the error message.
+		}
+	}
 	/**********
 	 * This is the Square root routine
 	 * 
@@ -630,6 +669,26 @@ public class UserInterface {
 		}
 		else {														// Some error occurred while doing the Square root.
 			text_Result.setText("");									// Do not display a result if there is an error.				
+			label_Result.setText("Result");							// Reset the result label if there is an error.
+			label_errResult.setText(perform.getResultErrorMessage());	// Display the error message.
+		}
+	}
+	
+	// This is the Square root routine for error term
+	
+	private void sqrtOperandset(){
+
+		
+		// If the operands are defined and valid, request the business logic method to do the Multiplication and return the
+		// result as a String. If there is a problem with the actual computation, an empty string is returned
+		String theAnswer = perform.squarerootet() ;						// Call the business logic mpy method
+		label_errResult.setText("");									// Reset any result error messages from before
+		if (theAnswer.length() > 0) {								// Check the returned String to see if it is okay
+			text_Resultet.setText(theAnswer);							// If okay, display it in the result field and
+			label_Result.setText("Square root");								// change the title of the field to "Multiplication"
+		}
+		else {														// Some error occurred while doing the Multiplication.
+			text_Resultet.setText("");									// Do not display a result if there is an error.				
 			label_Result.setText("Result");							// Reset the result label if there is an error.
 			label_errResult.setText(perform.getResultErrorMessage());	// Display the error message.
 		}
