@@ -38,6 +38,9 @@ public class BusinessLogic {
 	private CalculatorValue fraction2 = new CalculatorValue(0);
 	private CalculatorValue addfraction = new CalculatorValue(0);
 	private CalculatorValue mpyfraction = new CalculatorValue(0);
+	private CalculatorValue divfraction = new CalculatorValue(0);
+	private CalculatorValue powerfraction = new CalculatorValue(0);
+	private CalculatorValue power = new CalculatorValue(0);
 	private String operand1ErrorMessage = "";
 	private boolean operand1Defined = false;
 	private boolean operand1etDefined = false;
@@ -45,7 +48,7 @@ public class BusinessLogic {
 	private boolean operand2Defined = false;
 	private boolean operand2etDefined = false;
 	private String resultErrorMessage = "";
-
+	private double  a = 0.5;
 	/**********************************************************************************************
 
 	Constructors
@@ -380,5 +383,33 @@ public class BusinessLogic {
 		return resultet.toString();
 
 	}
-}
+	
+//A new method for the division of error terms of both the operands
+	public String quotientet() {
+		fraction1 = new CalculatorValue(operand1et);
+		fraction1.div(operand1);
+		fraction2 = new CalculatorValue(operand2et);
+		fraction2.div(operand2);
+		addfraction = new CalculatorValue(fraction1);
+		addfraction.add(fraction2);
+		divfraction = new CalculatorValue(operand1);
+		divfraction.div(operand2);
+		resultet = new CalculatorValue(addfraction);		
+		resultet.mpy(divfraction);
+		return resultet.toString();
 
+		}	
+	
+// A new Method for Square root for error term is implemented
+	public String squarerootet() {
+		fraction1 = new CalculatorValue(operand1et);
+		fraction1.div(operand1);
+		power = new CalculatorValue(operand1);
+		power.sqrt(operand1);
+		powerfraction = new CalculatorValue(fraction1);
+		powerfraction.mpy(power);
+		resultet = new CalculatorValue(a);		
+		resultet.mpy(powerfraction);
+		return resultet.toString();
+	}
+}
