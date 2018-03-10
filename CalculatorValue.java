@@ -589,9 +589,11 @@ public class CalculatorValue {
 		errorMessage = "";
 	}
 	public void subOperandset(CalculatorValue v) {
-		measuredValue -= v.measuredValue;
+		measuredValue += v.measuredValue;
 		errorMessage = "";
 	}
 }
+
+
 
 
