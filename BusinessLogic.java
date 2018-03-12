@@ -15,7 +15,7 @@ package calculator;
  * 
  *  * <p> Copyright: Lynn Robert Carter Â© 2017 </p>
  * 
- * @version 4.00	2018-02-27 The JavaFX-based GUI implementation of a Double integer calculator 
+ * @version 5.00	2018-03-10 The JavaFX-based GUI implementation of a Double calculator 
  * 
  */
 
@@ -29,8 +29,17 @@ public class BusinessLogic {
 	
 	// These are the major calculator values 
 	private CalculatorValue operand1 = new CalculatorValue(0);
+	private CalculatorValue operandet = new CalculatorValue(0);
 	private CalculatorValue operand2 = new CalculatorValue(0);
 	private CalculatorValue result = new CalculatorValue(0);
+	private String operand1ErrorMessage = "";
+	private String operand1etErrorMessage = "";
+	private boolean operand1Defined = false;
+	private String operand2ErrorMessage = "";
+	private String operand2etErrorMessage = "";
+	private boolean operand2Defined = false;
+	private String resultErrorMessage = "";
+	// These are the new major calculator values for computation of error terms
 	private CalculatorValue operand1et = new CalculatorValue(0);
 	private CalculatorValue operand2et = new CalculatorValue(0);
 	private CalculatorValue resultet = new CalculatorValue(0);
@@ -41,13 +50,11 @@ public class BusinessLogic {
 	private CalculatorValue divfraction = new CalculatorValue(0);
 	private CalculatorValue powerfraction = new CalculatorValue(0);
 	private CalculatorValue power = new CalculatorValue(0);
-	private String operand1ErrorMessage = "";
-	private boolean operand1Defined = false;
+	private CalculatorValue productresultet = new CalculatorValue(0);
+	private CalculatorValue quotientresultet = new CalculatorValue(0);
+	private CalculatorValue powerresultet = new CalculatorValue(0);
 	private boolean operand1etDefined = false;
-	private String operand2ErrorMessage = "";
-	private boolean operand2Defined = false;
 	private boolean operand2etDefined = false;
-	private String resultErrorMessage = "";
 	private double  a = 0.5;
 	/**********************************************************************************************
 
@@ -103,6 +110,9 @@ public class BusinessLogic {
 		operand1etDefined = true;							// Otherwise, set the defined flag and
 		return true;										// signal that the set worked
 	}
+	
+	
+	
 	
 	/**********
 	 * This public method takes an input String, checks to see if there is a non-empty input string.
@@ -183,6 +193,10 @@ public class BusinessLogic {
 		return operand1ErrorMessage;
 	}
 	
+	public String getOperand1etErrorMessage() {
+		return operand1ErrorMessage;
+	}
+	
 	/**********
 	 * This public setter sets the String explaining the current error into operand1.
 	 * 
@@ -193,6 +207,8 @@ public class BusinessLogic {
 		return;
 	}
 	
+	
+	
 	/**********
 	 * This public getter fetches the String explaining the current error in operand2, it there is one,
 	 * otherwise, the method returns an empty String.
@@ -200,6 +216,10 @@ public class BusinessLogic {
 	 * @return and error message or an empty String
 	 */
 	public String getOperand2ErrorMessage() {
+		return operand2ErrorMessage;
+	}
+	
+	public String getOperand2etErrorMessage() {
 		return operand2ErrorMessage;
 	}
 	
@@ -231,6 +251,9 @@ public class BusinessLogic {
 	 * @return true if the operand is defined and has no error, else false
 	 */
 	public boolean getOperand1Defined() {
+		return operand1Defined;
+	}
+	public boolean getOperand1etDefined() {
 		return operand1Defined;
 	}
 	
@@ -282,7 +305,7 @@ public class BusinessLogic {
 
 	/**********************************************************************************************
 
-	Business Logic Operations (e.g. addition)
+	Business Logic Operations for addition
 	
 	**********************************************************************************************/
 	
@@ -307,10 +330,25 @@ public class BusinessLogic {
 		return result.toString();
 	}
 	
+	/**********************************************************************************************
+
+	Business Logic Operations for subtraction
+	
+	**********************************************************************************************/
+	
 	/**********
-	 * The following methods are method stubs that are implemented.
+	 * This public method computes the sum of the two operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
 	 * 
-	 * @return
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
 	 */
 	public String subtraction() {
 		result = new CalculatorValue(operand1);
@@ -319,6 +357,27 @@ public class BusinessLogic {
 		return result.toString();
 	}
 	
+	/**********************************************************************************************
+
+	Business Logic Operations for multiplication
+	
+	**********************************************************************************************/
+	
+	/**********
+	 * This public method computes the sum of the two operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
+	 * 
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
+	 */
+	
 	public String multiplication() {
 		result = new CalculatorValue(operand1);
 		result.mpy(operand2);
@@ -326,6 +385,26 @@ public class BusinessLogic {
 		return result.toString();
 	}
 	
+	/**********************************************************************************************
+
+	Business Logic Operations for division
+	
+	**********************************************************************************************/
+	
+	/**********
+	 * This public method computes the sum of the two operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
+	 * 
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
+	 */
 	public String division() {
 		result = new CalculatorValue(operand1);
 		result.div(operand2);
@@ -344,7 +423,28 @@ public class BusinessLogic {
 		return operand;
 	}
 	}
-	// A new Method for Square root is implemented
+	
+	/**********************************************************************************************
+
+	Business Logic Operations for square root
+	
+	**********************************************************************************************/
+	
+	/**********
+	 * This public method computes the sum of the two operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
+	 * 
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
+	 */
+	
 	public String squareroot() {
 		result = new CalculatorValue(operand1);
 		result.sqrt(operand1);
@@ -354,13 +454,56 @@ public class BusinessLogic {
 	
 	// A new method for the addition of the error terms of the both the operands
 	
+	/**********************************************************************************************
+
+	Business Logic Operations for addition of the error terms of both the operands
+	
+	**********************************************************************************************/
+	
+	/**********
+	 * This public method computes the sum of the two error terms of both the operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
+	 * 
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
+	 */
+	
 	public String additionet() {
 		resultet = new CalculatorValue(operand1et);		
 		resultet.add(operand2et);
 		return resultet.toString();
 
 	}
+	
 	// A new method for the subtraction of the error terms of the both the operands
+	
+	/**********************************************************************************************
+
+	Business Logic Operations for subtraction of the error terms of the both the operands
+	
+	**********************************************************************************************/
+	
+	/**********
+	 * This public method computes the difference of the error terms of both the operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
+	 * 
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
+	 */
 	
 	public String subtractionet() {
 		resultet = new CalculatorValue(operand1et);		
@@ -368,7 +511,30 @@ public class BusinessLogic {
 		return resultet.toString();
 
 	}
+	
 //A new method for the multiplication of error terms of both the operands
+	
+	/**********************************************************************************************
+
+	Business Logic Operations for multiplication of error terms of both the operands
+	
+	**********************************************************************************************/
+	
+	/**********
+	 * This public method computes the sum of the two operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
+	 * 
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
+	 */
+	
 	public String productet() {
 		fraction1 = new CalculatorValue(operand1et);
 		fraction1.div(operand1);
@@ -378,13 +544,36 @@ public class BusinessLogic {
 		addfraction.add(fraction2);
 		mpyfraction = new CalculatorValue(operand1);
 		mpyfraction.mpy(operand2);
-		resultet = new CalculatorValue(addfraction);		
-		resultet.mpy(mpyfraction);
+		productresultet = new CalculatorValue(addfraction);		
+		productresultet.mpy(mpyfraction);
+		resultet = new CalculatorValue(productresultet);		
+		resultet.round(productresultet);
 		return resultet.toString();
 
 	}
 	
 //A new method for the division of error terms of both the operands
+	
+	/**********************************************************************************************
+
+	Business Logic Operations for division of error terms of both the operands
+	
+	**********************************************************************************************/
+	
+	/**********
+	 * This public method computes the sum of the two operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
+	 * 
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
+	 */
 	public String quotientet() {
 		fraction1 = new CalculatorValue(operand1et);
 		fraction1.div(operand1);
@@ -394,13 +583,51 @@ public class BusinessLogic {
 		addfraction.add(fraction2);
 		divfraction = new CalculatorValue(operand1);
 		divfraction.div(operand2);
-		resultet = new CalculatorValue(addfraction);		
-		resultet.mpy(divfraction);
-		return resultet.toString();
+		quotientresultet = new CalculatorValue(addfraction);		
+		quotientresultet.mpy(divfraction);
+		resultet = new CalculatorValue(quotientresultet);		
+		resultet.round(quotientresultet);
+		
+		String operand =  result.toString();
+		if (operand.equals("Infinity")) {
+			
+			String blank = "";
+			
+			resultErrorMessage = result.getErrorMessage();
+			return blank;
+		}
+		else {
+		 return resultet.toString();
+		}
+	
 
+		
+		
 		}	
+
 	
 // A new Method for Square root for error term is implemented
+	
+	/**********************************************************************************************
+
+	Business Logic Operations for Square root for error term is implemented
+	
+	**********************************************************************************************/
+	
+	/**********
+	 * This public method computes the sum of the two operands using the CalculatorValue class method 
+	 * for addition. The goal of this class is to support a wide array of different data representations 
+	 * without requiring a change to this class, user interface class, or the Calculator class.
+	 * 
+	 * This method assumes the operands are defined and valid. It replaces the left operand with the 
+	 * result of the computation and it leaves an error message, if there is one, in a String variable
+	 * set aside for that purpose.
+	 * 
+	 * This method does not take advantage or know any detail of the representation!  All of that is
+	 * hidden from this class by the ClaculatorValue class and any other classes that it may use.
+	 * 
+	 * @return a String representation of the result
+	 */
 	public String squarerootet() {
 		fraction1 = new CalculatorValue(operand1et);
 		fraction1.div(operand1);
@@ -408,8 +635,11 @@ public class BusinessLogic {
 		power.sqrt(operand1);
 		powerfraction = new CalculatorValue(fraction1);
 		powerfraction.mpy(power);
-		resultet = new CalculatorValue(a);		
-		resultet.mpy(powerfraction);
+		powerresultet= new CalculatorValue(a);	
+		powerresultet.mpy(powerfraction);
+		resultet = new CalculatorValue(powerresultet);		
+		resultet.round(powerresultet);
 		return resultet.toString();
+		
 	}
 }
