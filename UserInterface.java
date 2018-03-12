@@ -44,7 +44,7 @@ public class UserInterface {
 	private final double BUTTON_OFFSET = BUTTON_WIDTH / 2;
 
 	// These are the application values required by the user interface
-	private Label label_IntegerCalculator = new Label("Double Calculator with SQRT");
+	private Label label_IntegerCalculator = new Label("This is a Double Calculator");
 	private Label label_Operand1 = new Label("First operand");
 	private Label label_PaNSbO1AEM = new Label("\u00B1");
 	private TextField text_Operand1 = new TextField();
@@ -444,9 +444,11 @@ public class UserInterface {
 		    return true;
 		}	
 		if (errorMessage2.length() > 0) {					          
-				text_Operand2.setText("");               		     											
+				text_Operand2.setText("");    
+				text_Operand2et.setText("");  
 			}		                                         			
-			text_Operand2.setText("");                  		  
+			text_Operand2.setText("");  
+			text_Operand2et.setText("");   
 			label_errOperand2.setText("");                           
 		// If the code reaches here, neither the first nor the second has an error condition. The following code
 		// check to see if the operands are defined.
@@ -459,7 +461,31 @@ public class UserInterface {
 		return false;											     // Signal there are no issues with the operand1
 	}
 
-
+	private boolean binaryOperandIssuessqrtOperandset() {
+		
+		String errorMessage1 = perform.getOperand1etErrorMessage();    // Fetch the error messages, if there are any
+		String errorMessage2 = perform.getOperand2etErrorMessage();
+		if (errorMessage1.length() > 0) {						     // Check the first.  If the string is not empty
+			label_errOperand1.setText(errorMessage1);			     // there's an error message, so display it.
+		    return true;
+		}	
+		if (errorMessage2.length() > 0) {					          
+				text_Operand2.setText("");    
+				text_Operand2et.setText("");  
+			}		                                         			
+			text_Operand2et.setText("");  
+			text_Operand2et.setText("");   
+			label_errOperand2.setText("");                           
+		// If the code reaches here, neither the first nor the second has an error condition. The following code
+		// check to see if the operands are defined.
+		if (!perform.getOperand1etDefined()) {						 // Check to see if the first operand is defined
+			label_errOperand1.setText("No value found");			 // If not, this is an issue for a binary operator
+			
+			return true;
+		} 
+		
+		return false;											     // Signal there are no issues with the operand1
+	}
 	
 
 	/*******************************************************************************************************
@@ -491,7 +517,7 @@ public class UserInterface {
 		}
 	}
 	
-	private void addOperandset(){
+	private void addOperandset(){	
 		// Check to see if both operands are defined and valid
 
 		// If the operands are defined and valid, request the business logic method to do the addition and return the
@@ -633,17 +659,26 @@ public class UserInterface {
 	// This is the division routine for error term
 	
 	private void divOperandset(){
-
+		if (binaryOperandIssues()) 									// If there are issues with the operands, return
+			return;												// without doing the computation
 		
-		// If the operands are defined and valid, request the business logic method to do the Multiplication and return the
+		// If the operands are defined and valid, request the business logic method to do the division and return the
 		// result as a String. If there is a problem with the actual computation, an empty string is returned
-		String theAnswer = perform.quotientet();						// Call the business logic mpy method
-		label_errResult.setText("");									// Reset any result error messages from before
-		if (theAnswer.length() > 0) {								// Check the returned String to see if it is okay
+		String theAnswer = perform.quotientet();						// Call the business logic add method
+		label_errResult.setText("");										// Reset any result error messages from before
+		if ((theAnswer.equals("Infinity"))) {								// Check the returned String to see if it is okay
+
+			text_Result.setText("");									// Do not display a result if there is an error.				
+			label_Result.setText("Division");							// Reset the result label if there is an error.
+			label_errResult.setText("Divisor is invalid");	// Display the error message.
+									// change the title of the field to "Division"
+			}
+		if(theAnswer.length() > 0) {								// Check the returned String to see if it is okay
 			text_Resultet.setText(theAnswer);							// If okay, display it in the result field and
-			label_Result.setText("Quotient");								// change the title of the field to "Multiplication"
+			label_Result.setText("Quotient");	// Some error occurred while doing the division .
+			
 		}
-		else {														// Some error occurred while doing the Multiplication.
+		else {														// Some error occurred while doing the Division.
 			text_Resultet.setText("");									// Do not display a result if there is an error.				
 			label_Result.setText("Result");							// Reset the result label if there is an error.
 			label_errResult.setText(perform.getResultErrorMessage());	// Display the error message.
@@ -677,7 +712,8 @@ public class UserInterface {
 	// This is the Square root routine for error term
 	
 	private void sqrtOperandset(){
-
+	       if (binaryOperandIssuessqrtOperandset()) 							     // If there are issues with the operands, return
+		   return;	
 		
 		// If the operands are defined and valid, request the business logic method to do the Multiplication and return the
 		// result as a String. If there is a problem with the actual computation, an empty string is returned
