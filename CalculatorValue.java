@@ -584,14 +584,12 @@ public class CalculatorValue {
 		errorMessage = "";
 	}
 	
-	public void addOperandset(CalculatorValue v) {
-		measuredValue += v.measuredValue;
+	public void round(CalculatorValue v) {
+
+		measuredValue= Math.round( measuredValue*100.0)/100.0;
 		errorMessage = "";
 	}
-	public void subOperandset(CalculatorValue v) {
-		measuredValue += v.measuredValue;
-		errorMessage = "";
-	}
+	
 }
 
 
